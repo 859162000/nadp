@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../nadp-common/common.iml" filepath="$PROJECT_DIR$/../nadp-common/common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nadp.iml" filepath="$PROJECT_DIR$/nadp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../nadp-common/nadp-common.iml" filepath="$PROJECT_DIR$/../nadp-common/nadp-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../nadp-schedule-dispatch/nadp-schedule-dispatch.iml" filepath="$PROJECT_DIR$/../nadp-schedule-dispatch/nadp-schedule-dispatch.iml" />
+    </modules>
+  </component>
+</project>
