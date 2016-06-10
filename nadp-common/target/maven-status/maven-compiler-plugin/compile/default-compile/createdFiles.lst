@@ -1,4 +1,3 @@
-cn/com/netease/nadp/common/processor/RegistryProcessor$RegistryHeartProtocol.class
 cn/com/netease/nadp/common/common/Constants.class
 cn/com/netease/nadp/common/utils/NetUtils.class
 cn/com/netease/nadp/common/nameSpace/NadpNameSpaceHandler.class
@@ -8,5 +7,6 @@ cn/com/netease/nadp/common/common/Constants$ApplicationType.class
 cn/com/netease/nadp/common/processor/ApplicationInstantiationBeanPostProcessor.class
 cn/com/netease/nadp/common/application/Application.class
 cn/com/netease/nadp/common/registryCenter/RegistryCenter.class
+cn/com/netease/nadp/common/utils/SerializeUtils.class
 cn/com/netease/nadp/common/processor/RegistryProcessor.class
-cn/com/netease/nadp/common/utils/ZkClient.class
+cn/com/netease/nadp/common/processor/RegistryProcessor$ZKConnectListener.class

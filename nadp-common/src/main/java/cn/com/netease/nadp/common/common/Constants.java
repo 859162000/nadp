@@ -5,11 +5,9 @@ package cn.com.netease.nadp.common.common;
  * Description 常量定义
  */
 public final class Constants {
-    public static final String ROOT = "NADP";
-    public static final String REGISTER_TYPE_SCHEDULE="schedule";
+    public static final String ROOT = "/nadp";
     public static final int ZK_CONNECT_TIME_OUT=500;    //zk超时时间
-    public static final int ZK_SESSION_TIME_OUT=5000;    //zk超时时间
-    public static final int ZK_HEART_TIME=500; //心跳时间
+    public static final int ZK_SESSION_TIME_OUT=5000;    //zk超时时间ßß
 
     /**
      * applicationTyoe enum

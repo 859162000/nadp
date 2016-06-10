@@ -12,6 +12,9 @@
     <artifactId>nadp-schedule-dispatch</artifactId>
     <packaging>jar</packaging>
     <dependencies>
-
+        <dependency>
+            <groupId>cn.com.netease</groupId>
+            <artifactId>nadp-common</artifactId>
+        </dependency>
     </dependencies>
 </project>

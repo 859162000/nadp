@@ -11,16 +11,19 @@ public class Application implements Serializable{
     private String name;  //名称
     private String type;  //类型
 
-    public Application(String name,String type){
-        this.name = name;
-        this.type = type;
-    }
-
-    public final String getName() {
+    public String getName() {
         return name;
     }
 
-    public final String getType() {
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
         return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

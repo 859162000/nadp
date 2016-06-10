@@ -7,10 +7,15 @@
     <groupId>cn.com.netease</groupId>
     <artifactId>nadp</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>test</module>
+    </modules>
     <packaging>pom</packaging>
     <properties>
         <version.curator>2.8.0</version.curator>
         <version.spring>4.1.5.RELEASE</version.spring>
+
+        <version.nadp-common>1.0-SNAPSHOT</version.nadp-common>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -43,6 +48,21 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
                 <version>${version.spring}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.com.netease</groupId>
+                <artifactId>nadp-common</artifactId>
+                <version>${version.nadp-common}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>2.5</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

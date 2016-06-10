@@ -1,8 +1,7 @@
-package cn.com.netease.nadp.common.processor;
+package cn.com.netease.nadp.common.registryCenter;
 
 import cn.com.netease.nadp.common.application.Application;
 import cn.com.netease.nadp.common.common.Constants;
-import cn.com.netease.nadp.common.registryCenter.RegistryCenter;
 import cn.com.netease.nadp.common.utils.NetUtils;
 import cn.com.netease.nadp.common.utils.SerializeUtils;
 import org.apache.curator.framework.CuratorFramework;
@@ -11,46 +10,64 @@ import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.framework.state.ConnectionStateListener;
 import org.apache.curator.retry.RetryNTimes;
 import org.apache.zookeeper.CreateMode;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
 
-import java.util.concurrent.TimeUnit;
+import java.io.Serializable;
 
 /**
- * Created by bianlanzhou on 16/6/6.
+ * Created by bianlanzhou on 16/6/3.
  * Description
  */
-public final class RegistryProcessor {
-    /**
-     * 在ZOOKEEPER注册服务相关信息
-     * @param registryCenter
-     * @param application
-     */
-    protected static void doRegistry(RegistryCenter registryCenter,Application application){
-        String type = application.getType();
-        try{
-            if(null==type||"".equals(type)){
-                new RuntimeException("nadp:application type error!").printStackTrace();
+public class RegistryCenter implements Serializable ,ApplicationListener<ContextRefreshedEvent> {
+    private static final long serialVersionUID = 1L; //Serializable ID
+    private String address;  //ZK地址
+    private int port;   //ZK端口
+
+    public final String getAddress() {
+        return address;
+    }
+
+    public final void setAddress(String address) {
+        this.address = address;
+    }
+
+    public final int getPort() {
+        return port;
+    }
+
+    public final void setPort(int port) {
+        this.port = port;
+    }
+
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        if(contextRefreshedEvent.getApplicationContext().getParent()==null){
+            System.out.println("application started!");
+            ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
+            RegistryCenter registryCenter = (RegistryCenter)applicationContext.getBean("registry");
+            Application application = (Application)applicationContext.getBean("application");
+            try {
+                registry(registryCenter, application);
+            }catch(Exception ex){
+                ex.printStackTrace();
                 System.exit(1);
             }
-        }catch (Exception ex){
-            ex.printStackTrace();
-            System.exit(1);
         }
     }
 
-
-
-    private void createNodes(RegistryCenter registryCenter, Application application)throws Exception{
+    private void registry(RegistryCenter registryCenter, Application application)throws Exception{
         String ip = NetUtils.getFirstRealIp();
         String uri = registryCenter.getAddress() + ":" + registryCenter.getPort();
         String path = Constants.ROOT + "/" + application.getType() + "/" + application.getName() + "/" + ip;
-        CuratorFramework curator = CuratorFrameworkFactory.newClient(uri,Constants.ZK_SESSION_TIME_OUT,
-                                        Constants.ZK_CONNECT_TIME_OUT,
-                                            new RetryNTimes(5, 1000));
+        CuratorFramework curator = CuratorFrameworkFactory.newClient(uri, Constants.ZK_SESSION_TIME_OUT,
+                Constants.ZK_CONNECT_TIME_OUT,
+                new RetryNTimes(5, 1000));
         curator.start();
         byte[] seriApp = SerializeUtils.serialize(application);
         CreateMode createMode ;
         if(Constants.ApplicationType.schedule.getType().equals(application.getType())){//如果是SCHEDULE则使用带有REQ的临时节点
-            createMode = CreateMode.EPHEMERAL_SEQUENTIAL.EPHEMERAL;
+            createMode = CreateMode.EPHEMERAL_SEQUENTIAL;
             ZKConnectListener zkConnectListener = new ZKConnectListener(path,seriApp,createMode);
             curator.getConnectionStateListenable().addListener(zkConnectListener);
             curator.create().creatingParentsIfNeeded().withMode(createMode).forPath(path + "-", seriApp);
@@ -78,12 +95,11 @@ public final class RegistryProcessor {
             this.createMode = createMode;
         }
         public void stateChanged(CuratorFramework curatorFramework, ConnectionState connectionState) {
-            if (connectionState == ConnectionState.LOST) {
+            if (connectionState == ConnectionState.LOST||connectionState == ConnectionState.RECONNECTED) {
                 while (true) {
                     try {
                         if (curatorFramework.getZookeeperClient().blockUntilConnectedOrTimedOut()) {
-                            curatorFramework.create().creatingParentsIfNeeded().withMode(createMode)
-                                    .forPath(path, data);
+                            curatorFramework.create().creatingParentsIfNeeded().withMode(createMode).forPath(path, data);
                             break;
                         }
                     } catch (InterruptedException e) {
