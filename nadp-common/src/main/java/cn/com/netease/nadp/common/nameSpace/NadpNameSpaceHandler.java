@@ -1,7 +1,8 @@
 package cn.com.netease.nadp.common.nameSpace;
 
-import cn.com.netease.nadp.common.application.ApplicationParser;
-import cn.com.netease.nadp.common.registryCenter.RegistryCenterParser;
+import cn.com.netease.nadp.common.application.Application;
+import cn.com.netease.nadp.common.common.NadpBeanDefinitionParser;
+import cn.com.netease.nadp.common.registryCenter.RegistryCenter;
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 
 /**
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
  */
 public class NadpNameSpaceHandler extends NamespaceHandlerSupport {
     public void init() {
-        registerBeanDefinitionParser("application",new ApplicationParser());
-        registerBeanDefinitionParser("registryCenter",new RegistryCenterParser());
+        registerBeanDefinitionParser("application",new NadpBeanDefinitionParser(Application.class));
+        registerBeanDefinitionParser("registry",new NadpBeanDefinitionParser(RegistryCenter.class));
     }
 }
