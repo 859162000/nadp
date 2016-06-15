@@ -30,8 +30,8 @@
       <file leaf-file-name="ZKHelper.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../nadp-common/src/main/java/cn/com/netease/nadp/common/utils/ZKHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4375">
-              <caret line="33" column="7" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
+            <state vertical-scroll-proportion="0.625">
+              <caret line="42" column="104" selection-start-line="42" selection-start-column="104" selection-end-line="42" selection-end-column="104" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -864,7 +864,7 @@
       <updated>1465287499949</updated>
       <workItem from="1465287500631" duration="4781000" />
       <workItem from="1465292554141" duration="3254000" />
-      <workItem from="1465350212920" duration="30324000" />
+      <workItem from="1465350212920" duration="30325000" />
     </task>
     <option name="localTasksCounter" value="2" />
     <option name="createChangelist" value="false" />
@@ -872,7 +872,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65444000" />
+    <option name="totallyTimeSpent" value="65445000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="23" width="1440" height="817" extended-state="6" />
@@ -1333,8 +1333,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../nadp-common/src/main/java/cn/com/netease/nadp/common/utils/ZKHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4375">
-          <caret line="33" column="7" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
+        <state vertical-scroll-proportion="0.625">
+          <caret line="42" column="104" selection-start-line="42" selection-start-column="104" selection-end-line="42" selection-end-column="104" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
