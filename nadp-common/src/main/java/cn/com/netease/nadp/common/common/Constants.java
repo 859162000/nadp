@@ -6,6 +6,7 @@ package cn.com.netease.nadp.common.common;
  */
 public final class Constants {
     public static final String ROOT = "/nadp";
+    public static final String CONFIG_CENTER = ROOT + "/configCenter";
     public static final int ZK_CONNECT_TIME_OUT=500;    //zk超时时间
     public static final int ZK_SESSION_TIME_OUT=5000;    //zk超时时间ßß
 

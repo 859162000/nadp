@@ -2,6 +2,7 @@ package cn.com.netease.nadp.common.registryCenter;
 
 import cn.com.netease.nadp.common.application.Application;
 import cn.com.netease.nadp.common.common.Constants;
+import cn.com.netease.nadp.common.utils.AESHelper;
 import cn.com.netease.nadp.common.utils.NetUtils;
 import cn.com.netease.nadp.common.utils.SerializeUtils;
 import org.apache.curator.framework.CuratorFramework;
@@ -10,6 +11,8 @@ import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.framework.state.ConnectionStateListener;
 import org.apache.curator.retry.RetryNTimes;
 import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.WatchedEvent;
+import org.apache.zookeeper.Watcher;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -69,7 +72,7 @@ public class RegistryCenter implements Serializable ,ApplicationListener<Context
      */
     private void registry(RegistryCenter registryCenter, Application application)throws Exception{
         String ip = NetUtils.getFirstRealIp();
-        String uri = registryCenter.getAddress() + ":" + registryCenter.getPort();
+        String uri = AESHelper.aesDecrypt(registryCenter.getAddress()) + ":" + registryCenter.getPort();
         String root = Constants.ROOT + "/" + application.getType() + "/" + application.getName() + "/" ;
         curator = CuratorFrameworkFactory.newClient(uri, Constants.ZK_SESSION_TIME_OUT,
                 Constants.ZK_CONNECT_TIME_OUT,
@@ -161,5 +164,23 @@ public class RegistryCenter implements Serializable ,ApplicationListener<Context
      */
     public void destory(){
         curator.close();
+    }
+
+    /**
+     * 注册完成后获取配置数据
+     */
+    private void getConfig(){
+        curator.getData().usingWatcher(new Watcher() {
+            public void process(WatchedEvent event) {
+                if(event.getType() == Event.EventType.NodeDataChanged){
+                    try {
+                        curator.getData().forPath(Constants.CONFIG_CENTER);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.exit(1);
+                    }
+                }
+            }
+        });
     }
 }

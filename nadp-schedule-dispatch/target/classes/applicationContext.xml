@@ -11,7 +11,7 @@
 
 
     <nadp:application id="application" name="dispatch" type="schedule" />
-    <nadp:registry id="registry" address="123.56.14.172" port="2181" />
+    <nadp:registry id="registry" address="WwoQZSRbi+4BF8ZLAGzZhw==" port="2181" />
 
     <bean id="dispatch" name="dispatch" class="cn.com.netease.nadp.schedule.dispatch.Dispatch" />
 

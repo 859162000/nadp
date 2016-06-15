@@ -19,7 +19,7 @@ public class AESHelper {
     /**
      * 对称加密的KEY
      */
-    private static final String KEY = "OzWjk9iLU1n8OYsx";
+    private static final String KEY = "6rQ6QiI25dYvJcSa";
 
 
     /**

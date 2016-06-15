@@ -7,6 +7,11 @@
     <groupId>cn.com.netease</groupId>
     <artifactId>nadp</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>../nadp-web-config</module>
+        <module>../nadp-web-config</module>
+        <module>../nadp-web-config</module>
+    </modules>
     <packaging>pom</packaging>
     <properties>
         <version.curator>2.8.0</version.curator>
@@ -14,6 +19,8 @@
         <version.log4j>2.5</version.log4j>
         <version.nadp-common>1.0-SNAPSHOT</version.nadp-common>
         <version.slf4j>1.7.6</version.slf4j>
+        <version.jersey>2.22.2</version.jersey>
+        <version.commons-logging>1.2</version.commons-logging>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -48,9 +55,9 @@
                 <version>${version.spring}</version>
             </dependency>
             <dependency>
-                <groupId>cn.com.netease</groupId>
-                <artifactId>nadp-common</artifactId>
-                <version>${version.nadp-common}</version>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${version.spring}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -66,6 +73,28 @@
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-api</artifactId>
                 <version>${version.log4j}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.containers</groupId>
+                <artifactId>jersey-container-servlet</artifactId>
+                <version>${version.jersey}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.ext</groupId>
+                <artifactId>jersey-spring3</artifactId>
+                <version>${version.jersey}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${version.commons-logging}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>cn.com.netease</groupId>
+                <artifactId>nadp-common</artifactId>
+                <version>${version.nadp-common}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
