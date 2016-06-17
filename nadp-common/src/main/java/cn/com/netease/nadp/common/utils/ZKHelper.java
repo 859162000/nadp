@@ -45,7 +45,7 @@ public class ZKHelper {
                         new RetryNTimes(5, 1000));
         try {
             curator.setACL().withACL(list);
-            data = curator.getData().forPath("/nadp/config/all");
+            data = curator.getData().forPath("/nadp/monitor/all");
         } catch (Exception e) {
             e.printStackTrace();
         }

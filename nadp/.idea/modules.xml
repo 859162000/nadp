@@ -4,8 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/nadp.iml" filepath="$PROJECT_DIR$/nadp.iml" />
       <module fileurl="file://$PROJECT_DIR$/../nadp-common/nadp-common.iml" filepath="$PROJECT_DIR$/../nadp-common/nadp-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../nadp-monitor-center/nadp-monitor-center.iml" filepath="$PROJECT_DIR$/../nadp-monitor-center/nadp-monitor-center.iml" />
       <module fileurl="file://$PROJECT_DIR$/../nadp-schedule-dispatch/nadp-schedule-dispatch.iml" filepath="$PROJECT_DIR$/../nadp-schedule-dispatch/nadp-schedule-dispatch.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../nadp-web-config/nadp-web-config.iml" filepath="$PROJECT_DIR$/../nadp-web-config/nadp-web-config.iml" />
     </modules>
   </component>
 </project>

@@ -8,13 +8,9 @@
 			http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
 			http://www.163.com/schema/nadp http://www.163.com/schema/nadp/nadp.xsd"
        default-lazy-init="true">
-
-
     <nadp:application id="application" name="dispatch" type="schedule" />
     <nadp:registry id="registry" address="WwoQZSRbi+4BF8ZLAGzZhw==" port="2181" />
-
     <bean id="dispatch" name="dispatch" class="cn.com.netease.nadp.schedule.dispatch.Dispatch" />
-
     <task:scheduled-tasks>
         <task:scheduled ref="dispatch" method="run" cron="*/10 * * * * *"/>
     </task:scheduled-tasks>

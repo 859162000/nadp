@@ -81,7 +81,7 @@ public class RegistryCenter implements Serializable ,ApplicationListener<Context
         byte[] seriApp = SerializeUtils.serialize(application);
         CreateMode createMode ;
         if(Constants.ApplicationType.schedule.getType().equals(application.getType())){//如果是SCHEDULE则使用带有REQ的临时节点
-            registrySchedule(curator,seriApp,root+application.getName(),CreateMode.EPHEMERAL);
+            registrySchedule(curator,seriApp,root+ip,CreateMode.EPHEMERAL);
         }else if(Constants.ApplicationType.web.getType().equals(application.getType())){//如果是WEB则使用普通临时节点
             registryWeb(curator,seriApp,root+ip,CreateMode.EPHEMERAL);
         }else{

@@ -24,6 +24,7 @@
         <processorPath useClasspath="true" />
         <module name="common" />
         <module name="nadp-common" />
+        <module name="nadp-monitor-center" />
         <module name="nadp-schedule-dispatch" />
         <module name="nadp-web-config" />
         <module name="test" />
@@ -33,6 +34,7 @@
       <module name="common" target="1.5" />
       <module name="nadp" target="1.5" />
       <module name="nadp-common" target="1.5" />
+      <module name="nadp-monitor-center" target="1.5" />
       <module name="nadp-schedule-dispatch" target="1.5" />
       <module name="nadp-web-config" target="1.5" />
       <module name="test" target="1.5" />

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+	<!-- 持久化配置 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="#{app.mysql_url}"></property>
+		<property name="username" value="#{app.mysql_username}"></property>
+		<property name="password" value="#{app.mysql_password}"></property>
+		<property name="maxActive" value="100"></property>
+		<property name="maxIdle" value="30"></property>
+		<property name="maxWait" value="50000"></property>
+		<property name="defaultAutoCommit" value="true"></property>
+		<property name="validationQuery" value="SELECT NOW() FROM DUAL" />
+	</bean>
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="mapperLocations" value="classpath*:mapper/*Mapper*.xml"></property>
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+		<property name="annotationClass" value="org.springframework.stereotype.Repository"></property>
+		<property name="basePackage" value="cn.com.netease.nadp.web.monitor.dao"></property>
+	</bean>
+</beans>	
