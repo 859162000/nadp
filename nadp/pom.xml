@@ -20,6 +20,8 @@
         <version.mysql>5.1.34</version.mysql>
         <version.mybatis>3.2.8</version.mybatis>
         <version.mybatis-spring>1.2.2</version.mybatis-spring>
+        <version.net.sf.json>2.4</version.net.sf.json>
+        <version.google.gson>2.7</version.google.gson>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -56,6 +58,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
+                <version>${version.spring}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
                 <version>${version.spring}</version>
             </dependency>
             <dependency>
@@ -112,6 +119,11 @@
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis-spring</artifactId>
                 <version>${version.mybatis-spring}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${version.google.gson}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

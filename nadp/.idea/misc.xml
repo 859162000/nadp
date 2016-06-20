@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/../nadp-common/pom.xml" />
         <option value="$PROJECT_DIR$/../nadp-schedule-dispatch/pom.xml" />
         <option value="$PROJECT_DIR$/../nadp-web-config/pom.xml" />
+        <option value="$PROJECT_DIR$/../nadp-monitor-center/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

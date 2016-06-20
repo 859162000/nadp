@@ -2,13 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.com.netease.nadp.monitor.dao.ConfigDao">
     <resultMap id="configVO" type="cn.com.netease.nadp.monitor.vo.ConfigVO">
-        <result column="id" property="id" jdbcType="int" javaType="int" />
+        <result column="id" property="id" jdbcType="INTEGER" javaType="INTEGER" />
         <result column="key" property="key" />
         <result column="value" property="value" />
         <result column="create_date" property="createDate" />
     </resultMap>
-    <select id="selectAll"  resultType="configVO">
-        select * from nadp_config;
+    <select id="select" resultMap="configVO"  >
+        select * from nadp_config 
+        where 1=1
+        <if test="key !=null and key!=''" >
+            and key like CONCAT('%','${key}','%' )
+        </if>
     </select>
+    <update id="update" >
+        update nadp_config
+        <set>
+            value = #{value}
+        </set>
+        where 1=1
+        <if test="key != null and key != ''">
+            and key = #{key}
+        </if>
+    </update>
+
+    <insert id="insert">
+        insert into nadp_config
+        (key, value) values(#{key}, #{value})
+    </insert>
 
 </mapper>

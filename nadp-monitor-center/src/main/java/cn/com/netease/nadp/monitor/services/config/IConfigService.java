@@ -1,5 +1,8 @@
 package cn.com.netease.nadp.monitor.services.config;
 
+import cn.com.netease.nadp.monitor.vo.ConfigVO;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,5 +15,5 @@ public interface IConfigService {
      * 从数据库获取数据
      * @return
      */
-    public Map<String,String> loadConfigFromDB();
+    public List<ConfigVO> select(String key);
 }

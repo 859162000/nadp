@@ -7,9 +7,9 @@
         <relativePath>../nadp/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>nadp-web-config</artifactId>
+    <artifactId>nadp-monitor-center</artifactId>
     <packaging>war</packaging>
-    <name>nadp-web-config</name>
+    <name>nadp-monitor-center</name>
     <dependencies>
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
@@ -50,6 +50,10 @@
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.com.netease</groupId>
             <artifactId>nadp-common</artifactId>
         </dependency>
@@ -67,11 +71,15 @@
         </dependency>
         <dependency>
             <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
     </dependencies>
     <build>
-        <finalName>nadp-web-config</finalName>
+        <finalName>nadp-monitor-center</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
@@ -79,9 +87,9 @@
                 <version>2.1</version>
                 <configuration>
                     <port>9090</port>
-                    <path>/nadpConfig</path>
+                    <path>/monitor</path>
                     <uriEncoding>UTF-8</uriEncoding>
-                    <finalName>nadpConfig</finalName>
+                    <finalName>monitor</finalName>
                     <server>tomcat7</server>
                 </configuration>
             </plugin>

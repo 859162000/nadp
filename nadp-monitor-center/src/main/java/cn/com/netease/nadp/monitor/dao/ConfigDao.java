@@ -2,7 +2,6 @@ package cn.com.netease.nadp.monitor.dao;
 
 import cn.com.netease.nadp.monitor.vo.ConfigVO;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 /**
@@ -12,5 +11,6 @@ import java.util.List;
  */
 @Repository
 public interface ConfigDao {
-    public List<ConfigVO> selectAll();
+    public List<ConfigVO> select(String key);
+    public int update(String key);
 }
