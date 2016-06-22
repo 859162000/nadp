@@ -1,4 +1,4 @@
-package cn.com.netease.nadp.common.registryCenter;
+package cn.com.netease.nadp.common.center;
 
 import cn.com.netease.nadp.common.application.Application;
 import cn.com.netease.nadp.common.common.Constants;
@@ -46,7 +46,7 @@ public class RegistryCenter implements Serializable ,ApplicationListener<Context
     }
 
     /**
-     * SPRING容器初始化完成后执行节点的注册
+     * SPRING容器初始化完成后执行节点的注册 并初始化配置中心
      * @param contextRefreshedEvent
      */
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
@@ -57,6 +57,7 @@ public class RegistryCenter implements Serializable ,ApplicationListener<Context
             Application application = (Application)applicationContext.getBean("application");
             try {
                 registry(registryCenter, application);
+                ConfigCenter.config(curator);
             }catch(Exception ex){
                 ex.printStackTrace();
                 System.exit(1);
@@ -131,8 +132,12 @@ public class RegistryCenter implements Serializable ,ApplicationListener<Context
                 while (true) {
                     try {
                         if (curatorFramework.getZookeeperClient().blockUntilConnectedOrTimedOut()) {
-                            curatorFramework.create().creatingParentsIfNeeded().withMode(createMode).forPath(path, data);
-                            break;
+                            if(curatorFramework.checkExists().forPath(path)==null){
+                                curatorFramework.create().creatingParentsIfNeeded().withMode(createMode).forPath(path, data);
+                                break;
+                            }else{
+                                break;
+                            }
                         }
                     } catch (InterruptedException e) {
                         e.printStackTrace();

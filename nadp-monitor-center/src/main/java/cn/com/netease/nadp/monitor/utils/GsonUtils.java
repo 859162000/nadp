@@ -40,12 +40,7 @@ public class GsonUtils {
         return sdf;
     }
 
-    public static Gson getInstance(boolean onlyExpose) {
-        if (gsonExpose == null) {
-            gsonExpose = getGsonBuilderInstance().create();
-        }
-        return gsonExpose;
-    }
+
 
 
     private static GsonBuilder getGsonBuilderInstance() {
@@ -73,10 +68,9 @@ public class GsonUtils {
         return gsonBuilder;
     }
 
-    public static <T> T fromJson(String json, Class<T> classOfT,
-                                 boolean onlyExpose) {
+    public static <T> T fromJson(String json, Class<T> classz) {
         try {
-            return getInstance(onlyExpose).fromJson(json, classOfT);
+            return getInstance().fromJson(json, classz);
         } catch (Exception ex) {
             // Log exception
             return null;

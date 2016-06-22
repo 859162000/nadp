@@ -14,6 +14,11 @@
 
 	<!-- SPRING容器工具类 -->
 	<bean class="cn.com.netease.nadp.monitor.utils.SpringUtils" />
+	<!-- 初始化zkUtils类-->
+	<bean class="cn.com.netease.nadp.monitor.utils.ZKUtils"  >
+		<constructor-arg index="0" value="#{app.zk_address}" />
+		<constructor-arg index="1" value="#{app.zk_port}" />
+	</bean>
 	<!-- Jersey resource 扫描 -->
 	<context:component-scan base-package="cn.com.netease.nadp.monitor.resources" use-default-filters="false" >
 		<context:include-filter type="annotation" expression="cn.com.netease.nadp.monitor.annotations.NadpResource"	 />

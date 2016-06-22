@@ -1,6 +1,7 @@
 package cn.com.netease.nadp.monitor.dao;
 
-import cn.com.netease.nadp.monitor.vo.ConfigVO;
+import cn.com.netease.nadp.common.vo.ConfigVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  */
 @Repository
 public interface ConfigDao {
-    public List<ConfigVO> select(String key);
-    public int update(String key);
+    public List<ConfigVO> select(@Param("key") String key);
+    public int update(@Param("id")int id,@Param("value")String value);
+    public void insert(@Param("key")String key,@Param("value")String value,@Param("description")String description);
 }

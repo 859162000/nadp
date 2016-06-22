@@ -1,6 +1,6 @@
 package cn.com.netease.nadp.common;
 
-import cn.com.netease.nadp.common.registryCenter.RegistryCenter;
+import cn.com.netease.nadp.common.center.RegistryCenter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

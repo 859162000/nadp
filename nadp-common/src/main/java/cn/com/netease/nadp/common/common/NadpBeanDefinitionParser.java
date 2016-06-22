@@ -1,8 +1,7 @@
 package cn.com.netease.nadp.common.common;
 
 import cn.com.netease.nadp.common.application.Application;
-import cn.com.netease.nadp.common.registryCenter.RegistryCenter;
-import org.springframework.beans.factory.config.BeanDefinition;
+import cn.com.netease.nadp.common.center.RegistryCenter;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
