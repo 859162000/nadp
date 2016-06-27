@@ -59,7 +59,7 @@ public class ZKUtils implements InitializingBean{
                     Constants.ZK_CONNECT_TIME_OUT,
                     new RetryNTimes(5, 1000));
             curator.start();
-            curator.setData().forPath(path);
+            curator.setData().forPath(path,data);
         }catch (Exception ex){
             throw ex;
         }finally {
