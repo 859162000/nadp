@@ -100,7 +100,7 @@ public class RegistryCenter implements Serializable ,ApplicationListener<Context
     private void registrySchedule(CuratorFramework curator,byte[] seriApp,String path,CreateMode createMode)throws Exception{
         ZKConnectListener zkConnectListener = new ZKConnectListener(path,seriApp,createMode);
         curator.getConnectionStateListenable().addListener(zkConnectListener);
-        curator.create().creatingParentsIfNeeded().withMode(createMode).forPath(path + "-", seriApp);
+        curator.create().creatingParentsIfNeeded().withMode(createMode).forPath(path, seriApp);
     }
 
     /**
@@ -109,10 +109,10 @@ public class RegistryCenter implements Serializable ,ApplicationListener<Context
      * @param path
      * @param createMode
      */
-    private void registryWeb(CuratorFramework curator,byte[] seriApp,String path,CreateMode createMode)throws Exception{
-        ZKConnectListener zkConnectListener = new ZKConnectListener(path,seriApp,createMode);
+    private void registryWeb(CuratorFramework curator,byte[] data,String path,CreateMode createMode)throws Exception{
+        ZKConnectListener zkConnectListener = new ZKConnectListener(path,data,createMode);
         curator.getConnectionStateListenable().addListener(zkConnectListener);
-        curator.create().creatingParentsIfNeeded().withMode(createMode).forPath(path,seriApp);
+        curator.create().creatingParentsIfNeeded().withMode(createMode).forPath(path,data);
     }
 
     /**

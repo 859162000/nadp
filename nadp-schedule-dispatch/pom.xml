@@ -16,5 +16,9 @@
             <groupId>cn.com.netease</groupId>
             <artifactId>nadp-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -29,7 +29,7 @@ public class ConfigResource {
     @Consumes(value = MediaType.APPLICATION_JSON)
     @Path("/list")
     public RespVO getConfig(Map<String,String> map) {
-        String key = map.get("key");
+        String key =map==null?null: map.get("key");
         List<ConfigVO> list;
         RespVO vo = new RespVO();
         Map<String,Object> data = new HashMap<String, Object>(1);

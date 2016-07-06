@@ -22,12 +22,13 @@
         <version.mybatis-spring>1.2.2</version.mybatis-spring>
         <version.net.sf.json>2.4</version.net.sf.json>
         <version.google.gson>2.7</version.google.gson>
+        <version.jedis>2.8.0</version.jedis>
     </properties>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.apache.curator</groupId>
-                <artifactId>curator-framework</artifactId>
+                <artifactId>curator-recipes</artifactId>
                 <version>${version.curator}</version>
             </dependency>
             <dependency>
@@ -124,6 +125,11 @@
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>${version.google.gson}</version>
+            </dependency>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${version.jedis}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
