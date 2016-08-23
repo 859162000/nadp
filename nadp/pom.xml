@@ -8,24 +8,34 @@
     <artifactId>nadp</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <modules>
+        <module>../nadp-component</module>
+        <module>../nadp-monitor-center</module>
+    </modules>
     <properties>
         <version.curator>2.8.0</version.curator>
         <version.spring>4.1.5.RELEASE</version.spring>
         <version.log4j>2.5</version.log4j>
-        <version.nadp-common>1.0-SNAPSHOT</version.nadp-common>
         <version.slf4j>1.7.6</version.slf4j>
         <version.jersey>2.22.2</version.jersey>
         <version.commons-logging>1.2</version.commons-logging>
         <version.dbcp>1.4</version.dbcp>
+        <version.commons-lang3>3.3</version.commons-lang3>
         <version.mysql>5.1.34</version.mysql>
         <version.mybatis>3.2.8</version.mybatis>
         <version.mybatis-spring>1.2.2</version.mybatis-spring>
-        <version.net.sf.json>2.4</version.net.sf.json>
         <version.google.gson>2.7</version.google.gson>
         <version.jedis>2.8.0</version.jedis>
+        <version.httpcomponents>4.5</version.httpcomponents>
+        <version.javax.servlet-api>3.0.1</version.javax.servlet-api>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${version.javax.servlet-api}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-recipes</artifactId>
@@ -92,19 +102,24 @@
                 <version>${version.jersey}</version>
             </dependency>
             <dependency>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-json-jackson</artifactId>
+                <version>${version.jersey}</version>
+            </dependency>
+            <dependency>
                 <groupId>commons-logging</groupId>
                 <artifactId>commons-logging</artifactId>
                 <version>${version.commons-logging}</version>
             </dependency>
             <dependency>
-                <groupId>cn.com.netease</groupId>
-                <artifactId>nadp-common</artifactId>
-                <version>${version.nadp-common}</version>
-            </dependency>
-            <dependency>
                 <groupId>commons-dbcp</groupId>
                 <artifactId>commons-dbcp</artifactId>
                 <version>${version.dbcp}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${version.commons-lang3}</version>
             </dependency>
             <dependency>
                 <groupId>mysql</groupId>
@@ -131,6 +146,22 @@
                 <artifactId>jedis</artifactId>
                 <version>${version.jedis}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${version.httpcomponents}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.9.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>
