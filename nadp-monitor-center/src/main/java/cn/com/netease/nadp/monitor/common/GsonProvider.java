@@ -1,6 +1,11 @@
 package cn.com.netease.nadp.monitor.common;
 
 import cn.com.netease.nadp.monitor.utils.GsonUtils;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +30,6 @@ import javax.ws.rs.ext.Provider;
  */
 @Provider
 @Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class GsonProvider implements MessageBodyReader<Object>,MessageBodyWriter<Object> {
     private static final String UTF_8 = "UTF-8";
 
@@ -44,6 +48,7 @@ public class GsonProvider implements MessageBodyReader<Object>,MessageBodyWriter
             return GsonUtils.getInstance().fromJson(streamReader, genericType);
         } catch (com.google.gson.JsonSyntaxException e) {
             // Log exception
+            e.printStackTrace();
         } finally {
             streamReader.close();
         }
@@ -67,9 +72,10 @@ public class GsonProvider implements MessageBodyReader<Object>,MessageBodyWriter
             WebApplicationException {
         OutputStreamWriter writer = new OutputStreamWriter(entityStream, UTF_8);
         try {
-            GsonUtils.getInstance().toJson(object, genericType, writer);
+            new GsonBuilder().serializeNulls().create().toJson(object, genericType, writer);
         } finally {
             writer.close();
         }
     }
+
 }

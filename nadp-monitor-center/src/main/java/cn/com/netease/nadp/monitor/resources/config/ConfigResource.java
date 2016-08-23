@@ -1,16 +1,18 @@
 package cn.com.netease.nadp.monitor.resources.config;
 
-import cn.com.netease.nadp.common.vo.ConfigVO;
 import cn.com.netease.nadp.monitor.annotations.NadpResource;
 import cn.com.netease.nadp.monitor.common.Constant;
-import cn.com.netease.nadp.monitor.services.config.IConfigService;
-import cn.com.netease.nadp.monitor.vo.RespVO;
+import cn.com.netease.nadp.monitor.model.PaginationModel;
+import cn.com.netease.nadp.monitor.model.ResultModel;
+import cn.com.netease.nadp.monitor.service.config.ConfigService;
+import cn.com.netease.nadp.monitor.utils.NetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,79 +21,65 @@ import java.util.Map;
  * Description
  */
 @NadpResource
-@Path("/config")
+@Path("/configuration")
 public class ConfigResource {
 
     @Autowired
-    private IConfigService configService;
+    private ConfigService service;
+
     @POST
     @Produces(value = MediaType.APPLICATION_JSON)
-    @Consumes(value = MediaType.APPLICATION_JSON)
     @Path("/list")
-    public RespVO getConfig(Map<String,String> map) {
-        String key =map==null?null: map.get("key");
-        List<ConfigVO> list;
-        RespVO vo = new RespVO();
-        Map<String,Object> data = new HashMap<String, Object>(1);
-        try{
-            list = configService.select(key);
-            data.put("data",list);
-            vo.setDefault(Constant.ResultCode.SUCCESS);
-            vo.setData(data);
-        }catch(Exception ex){
-            ex.printStackTrace();
-            vo.setDefault(Constant.ResultCode.FAIL);
-        }
-        return vo;
-    }
-
-    @GET
-    @Produces(value = MediaType.APPLICATION_JSON)
-    @Consumes(value = MediaType.APPLICATION_JSON)
-    @Path("/update/{id}/{value}")
-    public RespVO updateConfig(@PathParam("id") int id,@PathParam("value") String value){
-        RespVO vo = new RespVO();
-        try{
-            vo.setDefault(Constant.ResultCode.SUCCESS);
-            configService.update(id, value);
+    public ResultModel getConfig(Map<String,String> map) {
+        ResultModel model = new ResultModel();
+        try {
+            PaginationModel paginationModel = new PaginationModel();
+            paginationModel.setAaData(service.getData(null,null,null,map.get("iDisplayStart")==null?0:Integer.valueOf(map.get("iDisplayStart")),Constant.PAGINATION_MAX_COUNT));
+            paginationModel.setiTotalDisplayRecords(service.getDataCount(null,null,null));
+            paginationModel.setiTotalRecords(Constant.PAGINATION_MAX_COUNT);
+            paginationModel.setsEcho(map.get("sEcho"));
+            Map<String,Object> data = new HashMap<String, Object>();
+            model.setInfo(paginationModel);
+            model.setResultMessage(Constant.ResultMessage.SUCCESS);
         }catch (Exception ex){
             ex.printStackTrace();
-            vo.setDefault(Constant.ResultCode.FAIL);
+            model.setDefault(Constant.ResultCode.FAIL);
         }
-        return vo;
+        return model;
     }
 
     @PUT
     @Produces(value = MediaType.APPLICATION_JSON)
-    @Consumes(value = MediaType.APPLICATION_JSON)
     @Path("/insert")
-    public RespVO insertConfig(Map<String,String> map){
-        RespVO vo = new RespVO();
-        String key = map.get("key");
-        String value = map.get("value");
-        String description = map.get("description");
-        try{
-            vo.setDefault(Constant.ResultCode.SUCCESS);
-            configService.insert(key,value,description);
+    public ResultModel insert(Map<String,Object> map) {
+        ResultModel model = new ResultModel();
+        try {
+            service.insert(map);
+            model.setDefault(Constant.ResultCode.SUCCESS);
         }catch (Exception ex){
             ex.printStackTrace();
-            vo.setDefault(Constant.ResultCode.FAIL);
+            model.setDefault(Constant.ResultCode.FAIL);
         }
-        return vo;
+        return model;
     }
-    @GET
-    @Path("/notifyCenter")
-    public RespVO notifyCenter(){
-        RespVO vo = new RespVO();
-        List<ConfigVO> list;
-        try{
-            list = configService.select(null);
-            configService.publicConfig(list);
-            vo.setDefault(Constant.ResultCode.SUCCESS);
+
+    @DELETE
+    @Produces(value = MediaType.APPLICATION_JSON)
+    @Path("/delete")
+    public ResultModel delete(Map<String,String> map){
+        ResultModel model = new ResultModel();
+        Map<String,Integer> refMap = new HashMap<String, Integer>(1);
+        try {
+            service.updateById(map.get("id")==null?"":map.get("id"),null,null,Constant.CONFIGURATION_STATUS);
+            model.setDefault(Constant.ResultCode.SUCCESS);
         }catch (Exception ex){
             ex.printStackTrace();
-            vo.setDefault(Constant.ResultCode.FAIL);
+            model.setDefault(Constant.ResultCode.FAIL);
         }
-        return vo;
+        return model;
     }
+
+
+
+
 }

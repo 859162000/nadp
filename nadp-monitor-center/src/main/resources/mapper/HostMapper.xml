@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.netease.nadp.monitor.dao.HostDao">
+    <resultMap id="hostVO" type="cn.com.netease.nadp.monitor.vo.HostVO">
+        <result column="id" property="id" jdbcType="INTEGER" javaType="INTEGER" />
+        <result column="host" property="host" />
+        <result column="create_date" property="createDate" />
+        <result column="status" property="status" />
+        <result column="description" property="description" />
+    </resultMap>
+    <select id="select" resultMap="hostVO">
+        select id,host,status,create_date,description from config_host where 1=1
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+        <if test="host != null and host != ''">
+            and host = #{host}
+        </if>
+        <if test="pageFrom > 0 and PageCapacity > 0 ">
+            limit #{pageFrom} , ${PageCapacity}
+        </if>
+    </select>
+    <select id="selectDataCount" resultType="int">
+        select count(1) from config_host where 1=1
+        <if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+        <if test="host != null and host != ''">
+            and name = #{host}
+        </if>
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" >
+        insert into config_host
+        (host ,description) values(#{host},#{description})
+    </insert>
+</mapper>

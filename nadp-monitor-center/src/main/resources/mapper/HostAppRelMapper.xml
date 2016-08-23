@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.netease.nadp.monitor.dao.HostAppRelDao">
+    <resultMap id="hostAppRelVO" type="cn.com.netease.nadp.monitor.vo.HostAppRelVO">
+        <result column="id" property="id" jdbcType="INTEGER" javaType="INTEGER" />
+        <result column="host_id" property="hostId" />
+        <result column="app_id" property="appId" />
+        <result column="create_date" property="createDate" />
+        <result column="status" property="status" />
+    </resultMap>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" >
+        insert into config_host_app_rel
+        (host_id,app_id ) values(#{hostId}, #{appId})
+    </insert>
+    <select id="select" resultMap="hostAppRelVO">
+        select id , host_id , app_id , status , create_date from config_host_app_rel
+        where 1=1
+        <if test="hostId !=null and hostId != ''">
+            and host_id = #{hostId}
+        </if>
+        <if test="appId !=null and appId !=''">
+            and app_id = #{appId}
+        </if>
+    </select>
+</mapper>
