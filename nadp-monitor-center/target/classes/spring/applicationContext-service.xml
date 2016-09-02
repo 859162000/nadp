@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nadp="http://www.163.com/schema/nadp"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
 		xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd        
@@ -9,26 +9,18 @@
 		http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-3.1.xsd
-		http://www.163.com/schema/nadp
-		http://www.163.com/schema/nadp/nadp.xsd">
-
+		">
 	<!-- SPRING容器工具类 -->
 	<bean class="cn.com.netease.nadp.monitor.utils.SpringUtils" />
-	<!-- 初始化zkUtils类-->
-	<bean class="cn.com.netease.nadp.monitor.utils.ZKUtils"  >
-		<constructor-arg index="0" value="#{app.zk_address}" />
-		<constructor-arg index="1" value="#{app.zk_port}" />
-	</bean>
+
+
 	<!-- Jersey resource 扫描 -->
 	<context:component-scan base-package="cn.com.netease.nadp.monitor.resources" use-default-filters="false" >
 		<context:include-filter type="annotation" expression="cn.com.netease.nadp.monitor.annotations.NadpResource"	 />
 	</context:component-scan>
 	<!-- Service 注解扫描 -->
-	<context:component-scan base-package="cn.com.netease.nadp.monitor.services" use-default-filters="false" >
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"	 />
+	<context:component-scan base-package="cn.com.netease.nadp.monitor.service" use-default-filters="false" >
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
 	</context:component-scan>
-	<!-- 工程定义 -->
-	<nadp:application id="application" name="config" type="web" />
-	<!-- 注册中心 -->
-	<nadp:registry id="registry" address="WwoQZSRbi+4BF8ZLAGzZhw==" port="2181" />
+
 </beans>	

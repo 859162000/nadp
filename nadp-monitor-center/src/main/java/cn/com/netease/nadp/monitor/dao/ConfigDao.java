@@ -29,7 +29,7 @@ public interface ConfigDao {
      * @param PageCapacity
      * @return
      */
-    public List<ConfigurationVO> select(@Param("name")String name,@Param("type")String type, @Param("status")String status, @Param("pageFrom")int pageFrom, @Param("PageCapacity")int PageCapacity);
+    public List<ConfigurationVO> select(@Param("id")String id,@Param("name")String name,@Param("type")String type, @Param("status")String status, @Param("pageFrom")int pageFrom, @Param("PageCapacity")int PageCapacity);
 
     /**
      * 查询数据总量（FOR PAGINATION）
@@ -47,12 +47,9 @@ public interface ConfigDao {
 
     /**
      * 更新
-     * @param id
-     * @param value
-     * @param type
-     * @param status
+     * @param vo
      */
-    public void updateById(@Param("id")String id,@Param("value")String value,@Param("type")String type,@Param("status")String status);
+    public void updateById(ConfigurationVO vo);
 
     /**
      * 通过APP和环境查询配置

@@ -20,4 +20,6 @@ public interface EnvDao {
     public int insert(@Param("name")String name, @Param("description")String description,@Param("zkAddress")String zkAddress);
 
     public List<EnvVO> selectAll(@Param("status")String status);
+
+    public void updateById(EnvVO vo);
 }

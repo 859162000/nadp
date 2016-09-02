@@ -31,4 +31,23 @@ public interface HostService {
      * @param map
      */
     public void insert(Map<String,Object> map);
+
+    /**
+     *
+     * @param map
+     * @return
+     */
+    public Map<String,Object> getRel(Map<String,String> map);
+
+    /**
+     *
+     * @param map
+     */
+    public void update(Map<String,Object> map);
+
+    /**
+     *
+     * @param map
+     */
+    public void delete(Map<String,String> map);
 }

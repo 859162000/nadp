@@ -13,5 +13,6 @@ import java.util.List;
 @Repository
 public interface HostAppRelDao {
     public void insert(HostAppRelVO vo);
-    public List<HostAppRelVO> select(@Param("hostId")String hostId, @Param("appId")String appId);
+    public List<HostAppRelVO> select(@Param("hostId")String hostId, @Param("appId")String appId,@Param("status")String status);
+    public void updateByHostId(HostAppRelVO vo);
 }

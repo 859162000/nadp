@@ -40,4 +40,22 @@ public interface AppService {
      */
     public List<AppVO> getAll(String status);
 
+    /**
+     *
+     * @param appId
+     * @return
+     */
+    public Map<String,Object> getRel(String appId);
+
+    /**
+     *
+     * @param map
+     */
+    public void update(Map<String,Object> map);
+
+    /**
+     *
+     * @param map
+     */
+    public void delete(Map<String,Object> map);
 }

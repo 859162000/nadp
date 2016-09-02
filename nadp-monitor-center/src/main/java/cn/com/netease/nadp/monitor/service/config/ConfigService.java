@@ -25,7 +25,7 @@ public interface ConfigService {
      * @param PageCapacity
      * @return
      */
-    public List<ConfigurationVO> getData(String name,String type, String status, int pageFrom, int PageCapacity);
+    public List<ConfigurationVO> getData(String id,String name,String type, String status, int pageFrom, int PageCapacity);
 
     /**
      * 获取配置条数
@@ -43,13 +43,23 @@ public interface ConfigService {
     public int deleteById(String id);
 
     /**
-     * 通过ID进行更新
+     *
      * @param id
-     * @param value
-     * @param type
-     * @param status
      */
-    public void updateById(String id,String value,String type,String status);
+    public void updateById(String id);
+
+    /**
+     * 获取联系
+     * @param id
+     * @return
+     */
+    public Map<String,Object> getRel(String id);
+
+    /**
+     * 更新
+     * @param map
+     */
+    public void update(Map<String,Object> map);
 
 
 }

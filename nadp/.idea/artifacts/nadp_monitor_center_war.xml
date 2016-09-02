@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="nadp-monitor-center:war">
+    <output-path>$PROJECT_DIR$/../nadp-monitor-center/target</output-path>
+    <root id="archive" name="nadp-monitor-center.war">
+      <element id="artifact" artifact-name="nadp-monitor-center:war exploded" />
+    </root>
+  </artifact>
+</component>

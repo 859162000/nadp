@@ -10,10 +10,8 @@
 		http://www.springframework.org/schema/util/spring-util-3.0.xsd
 		http://www.163.com/schema/nadp/register/configuration
 		http://www.163.com/schema/nadp/register/configuration/configuration.xsd">
-
-
 	<bean class="cn.com.netease.nadp.monitor.common.ConfigurationDataHandler"  />
 	<util:properties id="app" location="classpath:app.properties" />
 	<import resource="applicationContext-persistence.xml" />
 	<import resource="applicationContext-service.xml" />
-</beans>	
+</beans>

@@ -9,10 +9,7 @@ import cn.com.netease.nadp.monitor.utils.AppKeyGenUtils;
 import cn.com.netease.nadp.monitor.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +30,7 @@ public class AppResource {
         ResultModel model = new ResultModel();
         try {
             PaginationModel paginationModel = new PaginationModel();
-            paginationModel.setAaData(service.getData(null,null,map.get("iDisplayStart")==null?0:Integer.valueOf(map.get("iDisplayStart")), Constant.PAGINATION_MAX_COUNT));
+            paginationModel.setAaData(service.getData(map.get("name"),Constant.STATUS_USEFUL,map.get("iDisplayStart")==null?0:Integer.valueOf(map.get("iDisplayStart")), Constant.PAGINATION_MAX_COUNT));
             paginationModel.setiTotalDisplayRecords(service.getDataCount(null,null));
             paginationModel.setiTotalRecords(Constant.PAGINATION_MAX_COUNT);
             paginationModel.setsEcho(map.get("sEcho"));
@@ -88,7 +85,7 @@ public class AppResource {
         try {
             PaginationModel paginationModel = new PaginationModel();
             paginationModel.setiTotalRecords(Constant.PAGINATION_MAX_COUNT);
-            paginationModel.setAaData(service.getAll(map.get("status")));
+            paginationModel.setAaData(service.getAll(Constant.STATUS_USEFUL));
             paginationModel.setsEcho(map.get("sEcho"));
             Map<String,Object> data = new HashMap<String, Object>();
             model.setInfo(paginationModel);
@@ -100,5 +97,49 @@ public class AppResource {
         return model;
     }
 
+    @POST
+    @Produces(value = MediaType.APPLICATION_JSON)
+    @Path("/update/listRel")
+    public ResultModel listRel(Map<String,String> map){
+        ResultModel model = new ResultModel();
+        String appId = map.get("appId");
+        try {
+            model.setInfo(service.getRel(appId));
+            model.setDefault(Constant.ResultCode.SUCCESS);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            model.setDefault(Constant.ResultCode.FAIL);
+        }
+        return model;
+    }
 
+    @PUT
+    @Produces(value = MediaType.APPLICATION_JSON)
+    @Path("/update")
+    public ResultModel update(Map<String,Object> map){
+        ResultModel model = new ResultModel();
+        try {
+            service.update(map);
+            model.setDefault(Constant.ResultCode.SUCCESS);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            model.setDefault(Constant.ResultCode.FAIL);
+        }
+        return model;
+    }
+
+    @DELETE
+    @Produces(value = MediaType.APPLICATION_JSON)
+    @Path("/delete")
+    public ResultModel delete(Map<String,Object> map){
+        ResultModel model = new ResultModel();
+        try {
+            service.delete(map);
+            model.setDefault(Constant.ResultCode.SUCCESS);
+        }catch (Exception ex){
+            ex.printStackTrace();
+            model.setDefault(Constant.ResultCode.FAIL);
+        }
+        return model;
+    }
 }

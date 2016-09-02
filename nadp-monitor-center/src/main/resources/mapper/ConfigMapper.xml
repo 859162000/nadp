@@ -16,16 +16,21 @@
     </insert>
     <select id="select" resultMap="configurationVo">
         select id,key_name,value,type,status,description,create_date from config where 1=1
+        <if test="id !=null and id != ''">
+          and id = #{id}
+        </if>
         <if test="status != null and status != ''">
             and status = #{status}
         </if>
         <if test="type != null and type != ''">
             and type = #{type}
         </if>
-        <if test="name != null and status != name">
+        <if test="name != null and name != ''">
             and key_name=#{name}
         </if>
-        limit #{pageFrom} , ${PageCapacity}
+        <if test="pageFrom >= 0 and PageCapacity > 0" >
+          limit #{pageFrom} , #{PageCapacity}
+        </if>
     </select>
     <select id="selectDataCount" resultType="int" >
         select count(1) as count from config where 1=1
@@ -45,18 +50,24 @@
 
     <update id="updateById">
         UPDATE config
-        <set>
+        <trim prefix="SET" suffixOverrides=",">
             <if test="value!=null and value!=''">
-                value = #{value}
+                value = #{value},
             </if>
             <if test="status!=null and status!=''">
-                status = ${status}
+                status = #{status},
             </if>
             <if test="type!=null and type!=''">
-                type = #{type}
+                type = #{type},
             </if>
-            where id = #{id}
-        </set>
+            <if test="keyName!=null and keyName!=''">
+                key_name = #{keyName},
+            </if>
+            <if test="description!=null and description!=''">
+                description = #{description},
+            </if>
+        </trim>
+        where id = #{id}
     </update>
 
     <select id="getConfiguration" resultType="map">
@@ -71,5 +82,6 @@
         <if test="type !=null and type !=''">
             and a.type = #{type}
         </if>
+        and a.status = b.status = c.status = 1
     </select>
 </mapper>

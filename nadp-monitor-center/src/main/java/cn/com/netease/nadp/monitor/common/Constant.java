@@ -8,11 +8,13 @@ package cn.com.netease.nadp.monitor.common;
 public class Constant {
     public static final int PAGINATION_MAX_COUNT=10;
 
-    public static final String CONFIGURATION_STATUS = "0";
-
     public static final String PATH_ROOT = "/configuration";
 
     public static final String PATH_DATA = "/data";
+
+    public static final String STATUS_USEFUL = "1";
+
+    public static final String STATUS_UNUSEFUL = "0";
 
 
 

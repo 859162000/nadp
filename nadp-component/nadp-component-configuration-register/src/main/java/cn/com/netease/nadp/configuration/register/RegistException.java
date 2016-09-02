@@ -5,8 +5,8 @@ package cn.com.netease.nadp.configuration.register;
  * Description
  */
 public class RegistException extends RuntimeException {
-    private static String RECONNECT_EXCEPTION = "regist fail .";
+    private static String REGIST_EXCEPTION = "regist fail .";
     public RegistException(String detail){
-        super(RECONNECT_EXCEPTION + detail);
+        super(REGIST_EXCEPTION + detail);
     }
 }

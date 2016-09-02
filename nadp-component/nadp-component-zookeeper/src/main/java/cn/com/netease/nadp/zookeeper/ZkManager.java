@@ -47,14 +47,12 @@ public class ZkManager {
         return this;
     }
     /**
-     * 此方法只供初次连接时调用，如果再次调用会抛出重新连接的异常
+     * 此方法只供初次连接时调用，如果再次调用则会返回最开始的
      * @throws ZkReConnectedException
      */
     public ZkManager connect(String address)throws ZkReConnectedException{
         if(zkSource==null){
             zkSource = new ZkSource(address);
-        }else{
-            throw new ZkReConnectedException();
         }
         return this;
     }

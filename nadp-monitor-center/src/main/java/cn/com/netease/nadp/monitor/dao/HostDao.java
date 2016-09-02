@@ -36,4 +36,10 @@ public interface HostDao {
      */
     public void insert(HostVO vo);
 
+    /**
+     *
+     * @param vo
+     */
+    public void updateById(HostVO vo);
+
 }

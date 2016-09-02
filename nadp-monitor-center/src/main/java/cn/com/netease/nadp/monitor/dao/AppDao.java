@@ -36,5 +36,16 @@ public interface AppDao {
      */
     public void insert(AppVO vo);
 
+    /**
+     *
+     * @param status
+     * @return
+     */
     public List<AppVO> selectAll(@Param("status") String status);
+
+    /**
+     *
+     * @param vo
+     */
+    public void updateById(AppVO vo);
 }

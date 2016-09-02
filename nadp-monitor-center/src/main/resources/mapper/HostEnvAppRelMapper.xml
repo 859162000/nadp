@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.netease.nadp.monitor.dao.HostEnvAppRelDao">
+    <resultMap id="hostEnvAppRelVO" type="cn.com.netease.nadp.monitor.vo.HostEnvAppRelVO">
+        <result column="id" property="id" jdbcType="INTEGER" javaType="INTEGER" />
+        <result column="host_id" property="hostId" />
+        <result column="app_id" property="appId" />
+        <result column="env_id" property="envId" />
+        <result column="create_date" property="createDate" />
+        <result column="status" property="status" />
+    </resultMap>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" >
+        insert into config_host_env_app_rel
+        (host_id,env_id,app_id ) values(#{hostId}, #{envId},#{appId})
+    </insert>
+    <select id="select" resultMap="hostEnvAppRelVO">
+        select id,host_id,env_id,app_id,create_date,status from config_host_env_app_rel where 1=1
+        <if test="hostId != null and hostId != ''">
+            and host_id = #{hostId}
+        </if>
+        <if test="appId != null and appId !=''">
+            and app_id = #{appId}
+        </if>
+        <if test="envId != null and envId !=''">
+            and env_id = #{envId}
+        </if>
+        <if test="status != null and status !=''">
+            and status = #{status}
+        </if>
+    </select>
+    <update id="updateByHostId">
+        update config_host_env_app_rel
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="appId != null and appId != ''">
+                app_id = #{appId},
+            </if>
+            <if test="envId != null and envId != ''">
+                env_id = #{envId},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+        </trim>
+        where host_id = #{hostId}
+    </update>
+</mapper>

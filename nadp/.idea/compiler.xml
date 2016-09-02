@@ -22,22 +22,21 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="common" />
-        <module name="nadp-common" />
+        <module name="nadp-component-common" />
+        <module name="nadp-component-configuration-register" />
+        <module name="nadp-component-package" />
+        <module name="nadp-component-zookeeper" />
         <module name="nadp-monitor-center" />
-        <module name="nadp-schedule-dispatch" />
-        <module name="nadp-web-config" />
-        <module name="test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="common" target="1.5" />
       <module name="nadp" target="1.5" />
-      <module name="nadp-common" target="1.5" />
+      <module name="nadp-component" target="1.5" />
+      <module name="nadp-component-common" target="1.5" />
+      <module name="nadp-component-configuration-register" target="1.5" />
+      <module name="nadp-component-package" target="1.5" />
+      <module name="nadp-component-zookeeper" target="1.5" />
       <module name="nadp-monitor-center" target="1.5" />
-      <module name="nadp-schedule-dispatch" target="1.5" />
-      <module name="nadp-web-config" target="1.5" />
-      <module name="test" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

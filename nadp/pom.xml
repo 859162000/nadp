@@ -26,7 +26,7 @@
         <version.mybatis-spring>1.2.2</version.mybatis-spring>
         <version.google.gson>2.7</version.google.gson>
         <version.jedis>2.8.0</version.jedis>
-        <version.httpcomponents>4.5</version.httpcomponents>
+        <version.httpcomponents>4.1.3</version.httpcomponents>
         <version.javax.servlet-api>3.0.1</version.javax.servlet-api>
     </properties>
     <dependencyManagement>

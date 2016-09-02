@@ -2,7 +2,7 @@ package cn.com.netease.nadp.configuration.register;
 
 import cn.com.netease.nadp.common.Constants;
 import cn.com.netease.nadp.common.net.HttpUtils;
-import cn.com.netease.nadp.zookeeper.ConfigurationNodeHander;
+import cn.com.netease.nadp.zookeeper.ConfigurationNodeHandler;
 import cn.com.netease.nadp.zookeeper.ZkManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -73,9 +73,11 @@ public class ConfigurationRegister implements ApplicationListener<ContextRefresh
      * @param contextRefreshedEvent
      */
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        this.applicationContext = contextRefreshedEvent.getApplicationContext();
-        getZkAddress();
-        regist();
+        if(contextRefreshedEvent.getApplicationContext().getParent()==null){
+            this.applicationContext = contextRefreshedEvent.getApplicationContext();
+            getZkAddress();
+            regist();
+        }
     }
 
     /**
@@ -86,7 +88,9 @@ public class ConfigurationRegister implements ApplicationListener<ContextRefresh
         map.put("appKey",this.appKey);
         String jsonStr = new Gson().toJson(map);
         try {
+            System.out.println(this.address+"/"+Constants.URL_CENTER+"&"+jsonStr);
             String message = HttpUtils.doPost(this.address+"/"+Constants.URL_CENTER,jsonStr);
+            System.out.println("message : " + message);
             JsonObject obj = new JsonParser().parse(message).getAsJsonObject();
             String code = obj.get("code")==null?Constants.Result.FAIL.getCode():obj.get("code").getAsString();
             if(code.equals(Constants.Result.FAIL.getCode())){
@@ -117,7 +121,7 @@ public class ConfigurationRegister implements ApplicationListener<ContextRefresh
         String envPath = appPath + "/" + env ;
         String path =envPath + "/" + Constants.DATA;
         try {
-            ZkManager.getInstance().connect(this.zkAddress).cacheNode(path, new ConfigurationListener(appKey,applicationContext),new ConfigurationNodeHander(appPath,this.appName.getBytes("utf-8"),envPath,this.envName.getBytes("utf-8")));
+            ZkManager.getInstance().connect(this.zkAddress).cacheNode(path, new ConfigurationListener(appKey,applicationContext),new ConfigurationNodeHandler(appPath,this.appName.getBytes("utf-8"),envPath,this.envName.getBytes("utf-8")));
         }catch (Exception ex){
             ex.printStackTrace();
             System.exit(0);

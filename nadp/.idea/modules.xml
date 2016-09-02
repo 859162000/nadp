@@ -3,9 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/nadp.iml" filepath="$PROJECT_DIR$/nadp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../nadp-common/nadp-common.iml" filepath="$PROJECT_DIR$/../nadp-common/nadp-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../nadp-component/nadp-component.iml" filepath="$PROJECT_DIR$/../nadp-component/nadp-component.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../nadp-component/nadp-component-common/nadp-component-common.iml" filepath="$PROJECT_DIR$/../nadp-component/nadp-component-common/nadp-component-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../nadp-component/nadp-component-configuration-register/nadp-component-configuration-register.iml" filepath="$PROJECT_DIR$/../nadp-component/nadp-component-configuration-register/nadp-component-configuration-register.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../nadp-component/nadp-component-package/nadp-component-package.iml" filepath="$PROJECT_DIR$/../nadp-component/nadp-component-package/nadp-component-package.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../nadp-component/nadp-component-zookeeper/nadp-component-zookeeper.iml" filepath="$PROJECT_DIR$/../nadp-component/nadp-component-zookeeper/nadp-component-zookeeper.iml" />
       <module fileurl="file://$PROJECT_DIR$/../nadp-monitor-center/nadp-monitor-center.iml" filepath="$PROJECT_DIR$/../nadp-monitor-center/nadp-monitor-center.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../nadp-schedule-dispatch/nadp-schedule-dispatch.iml" filepath="$PROJECT_DIR$/../nadp-schedule-dispatch/nadp-schedule-dispatch.iml" />
     </modules>
   </component>
 </project>
