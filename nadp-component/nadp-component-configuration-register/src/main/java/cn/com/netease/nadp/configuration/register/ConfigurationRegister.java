@@ -2,23 +2,39 @@ package cn.com.netease.nadp.configuration.register;
 
 import cn.com.netease.nadp.common.Constants;
 import cn.com.netease.nadp.common.net.HttpUtils;
+import cn.com.netease.nadp.common.utils.StringUtils;
 import cn.com.netease.nadp.zookeeper.ConfigurationNodeHandler;
 import cn.com.netease.nadp.zookeeper.ZkManager;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * 配置中心
  * Created by bjbianlanzhou on 2016/8/2.
  * Description
  */
-public class ConfigurationRegister implements ApplicationListener<ContextRefreshedEvent>{
+public class ConfigurationRegister implements ApplicationContextAware{
     /**
      * 注册中心地址
      */
@@ -40,14 +56,23 @@ public class ConfigurationRegister implements ApplicationListener<ContextRefresh
      */
     private String appName;
 
-    private ApplicationContext applicationContext;
-
-
     /**
      * 注册中心地址
      */
     private String zkAddress;
+    /**
+     * 类型 center\local
+     */
+    private String type;
 
+    /**
+     * 配置文件地址
+     */
+    private String location;
+
+    private ApplicationContext applicationContext;
+
+    public Map<String,String> persistence = new HashMap<String,String>();
 
     public String getAddress() {
         return address;
@@ -65,19 +90,120 @@ public class ConfigurationRegister implements ApplicationListener<ContextRefresh
         this.appKey = appKey;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+        processMemeryConfiguration();
+    }
+    public void process(){
+        processPersistence();
+        processMemeryConfiguration();
+    }
+    /**
+     * 处理持久化配置
+     */
+    private void processPersistence()  {
+        if(Constants.ConfigurationRegisterType.LOCAL.getType().equals(type)){
+            processLocalPersistence();
+        }else{  //默认CENTER
+            processCenterPersistence();
+        }
+    }
+
+    /**
+     * 获取本机的配置
+     */
+    private void processLocalPersistence()  {
+        InputStream is = this.getClass().getResourceAsStream(location);
+        Properties p = new Properties();
+        try {
+            p.load(is);
+            is.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        for(Map.Entry entry : p.entrySet()){
+            persistence.put(StringUtils.obj2String(entry.getKey()),StringUtils.obj2String(entry.getValue()));
+        }
+    }
+
+    /**
+     * 获取配置中心的配置
+     */
+    private void processCenterPersistence()  {
+        JsonObject json = new JsonObject();
+        json.addProperty("appKey",appKey);
+        String message = null;
+        try {
+            message = HttpUtils.doPost(this.address+"/"+Constants.CENTER_PERSISTENCE,json.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JsonObject obj = new JsonParser().parse(message).getAsJsonObject();
+        if(Constants.Result.FAIL.getCode().equals(obj.get("code").getAsString())){
+            //log here
+            throw new RuntimeException("center refused !");
+        }
+        JsonArray persistenceArr = obj.getAsJsonArray("info");
+        List<Map<String,String>> persistenceList = (new Gson()).fromJson(persistenceArr, new TypeToken<List<Map<String,String>>>(){}.getType());
+        if(persistenceList == null || persistenceList.size()<=0){
+            return ;
+        }
+        for(Map<String,String> configurationMap : persistenceList){
+            persistence.put(configurationMap.get("key_name"),configurationMap.get("value"));
+        }
+    }
 
 
 
     /**
-     * 容器初加载完成后调用
-     * @param contextRefreshedEvent
+     * 处理内存配置
      */
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        if(contextRefreshedEvent.getApplicationContext().getParent()==null){
-            this.applicationContext = contextRefreshedEvent.getApplicationContext();
-            getZkAddress();
-            regist();
+    public void processMemeryConfiguration(){
+        if(Constants.ConfigurationRegisterType.LOCAL.getType().equals(type)){
+            processLocalMemeryConfiguration();
+        }else{
+            processCenterMemeryConfiguration();
         }
+    }
+
+    /**
+     * 处理本地配置
+     */
+    public void processLocalMemeryConfiguration(){
+        Map<String,ConfigurationHandler> handlerMap = applicationContext.getBeansOfType(ConfigurationHandler.class);
+        InputStream is = this.getClass().getResourceAsStream(location);
+        Properties p = new Properties();
+        try {
+            p.load(is);
+            is.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        Configuration.getInstance().loadConfig(p,handlerMap);
+    }
+
+    /**
+     * 处理配置中心内存配置
+     */
+    public void processCenterMemeryConfiguration(){
+        getZkAddress();
+        regist();
     }
 
     /**
@@ -127,5 +253,6 @@ public class ConfigurationRegister implements ApplicationListener<ContextRefresh
             System.exit(0);
         }
     }
+
 
 }

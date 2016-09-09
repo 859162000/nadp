@@ -57,8 +57,12 @@ public class CenterResource {
         String appKey = map.get("appKey");
         ResultModel model = new ResultModel();
         try {
-            model.setInfo(service.getConfig(appKey,ip,Constant.ConfigurationType.MEMORY.getCode()));
             model.setDefault(Constant.ResultCode.SUCCESS);
+            List<Map<String,String>> persistenceList = service.getConfig(appKey,ip,Constant.ConfigurationType.MEMORY.getCode());
+            if(null == persistenceList){
+                model.setDefault(Constant.ResultCode.FAIL);
+            }
+            model.setInfo(persistenceList);
         }catch (Exception ex){
             ex.printStackTrace();
             model.setDefault(Constant.ResultCode.FAIL);
@@ -66,34 +70,27 @@ public class CenterResource {
         return model;
     }
 
-    @GET
+
+    @POST
+    @Produces(value = MediaType.APPLICATION_JSON)
     @Path("/getPersistenceConfig")
-    public void getPersistenceConfig(@Context HttpServletRequest request,@Context HttpServletResponse response){
+    public ResultModel getPersistenceConfig(@Context HttpServletRequest request,Map<String,String> map){
         String ip = NetUtils.getRemoteIp(request);
-        String appKey = request.getParameter("appKey");
-        PrintWriter writer = null;
+        String appKey = map.get("appKey");
+        ResultModel model = new ResultModel();
         if(appKey==null||"".equals(appKey)){
-            try {
-                writer =  response.getWriter();
-                writer.write("appKey is null !");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return;
+            model.setDefault(Constant.ResultCode.FAIL);
+            return model;
         }
         try {
-            writer =  response.getWriter();
             List<Map<String,String>> configList = service.getConfig(appKey,ip,Constant.ConfigurationType.PERSISTENCE.getCode());
-            for(Map<String,String> configMap : configList ){
-                writer.write(configMap.get("key_name")+"="+configMap.get("value") + "\n");
-            }
+            model.setInfo(configList);
+            model.setDefault(Constant.ResultCode.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-             if(writer!=null){
-                 writer.close();
-             }
+            model.setDefault(Constant.ResultCode.FAIL);
         }
+        return model;
     }
 
     @POST

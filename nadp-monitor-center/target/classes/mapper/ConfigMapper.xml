@@ -40,7 +40,7 @@
         <if test="type != null and type != ''">
             and type = #{type}
         </if>
-        <if test="name != null and status != name">
+        <if test="name != null and name != ''">
             and key_name=#{name}
         </if>
     </select>

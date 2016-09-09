@@ -3,6 +3,7 @@ cn\com\netease\nadp\configuration\register\Configuration.class
 cn\com\netease\nadp\configuration\register\RegistException.class
 cn\com\netease\nadp\configuration\register\ConfigurationListener$1.class
 cn\com\netease\nadp\configuration\register\Configuration$ConfigurationBuilder.class
+cn\com\netease\nadp\configuration\register\ConfigurationRegister$1.class
 cn\com\netease\nadp\configuration\register\ConfigurationHandler.class
 cn\com\netease\nadp\configuration\register\Configuration$1.class
 cn\com\netease\nadp\configuration\register\ConfigurationRegister.class

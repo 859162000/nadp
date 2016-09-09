@@ -39,6 +39,7 @@ public class ConfigurationListener implements NodeCacheListener {
     public ConfigurationListener(String appKey,ApplicationContext applicationContext) {
         this.appKey = appKey;
         this.applicationContext = applicationContext;
+        process();
     }
 
     /**
@@ -46,6 +47,10 @@ public class ConfigurationListener implements NodeCacheListener {
      * @throws Exception
      */
     public void nodeChanged() throws Exception {
+        process();
+    }
+
+    private void process(){
         try {
             Map<String,ConfigurationHandler> handlerMap = applicationContext.getBeansOfType(ConfigurationHandler.class);
             List<Map<String,String>> configuration = getConfigurationFromCenter();
@@ -64,7 +69,7 @@ public class ConfigurationListener implements NodeCacheListener {
         List<Map<String,String>> list = new ArrayList<Map<String, String>>();
         JsonArray configuration = null;
         ConfigurationRegister register = (ConfigurationRegister)applicationContext.getBean("register");
-        String url = register.getAddress() + "/" + Constants.URL_GETCONFIG;
+        String url = register.getAddress() + "/" + Constants.CENTER_MEMERY;
         Map<String,String> paramMap = new HashMap<String, String>(2);
         paramMap.put("appKey",appKey);
         Gson gson = new Gson();

@@ -11,7 +11,8 @@ public class Constants {
     public static final String DATA =  "data";
     public static final String UTF8 = "utf-8";
     public static final String URL_CENTER = "center/registry";
-    public static final String URL_GETCONFIG = "center/getConfig";
+    public static final String CENTER_MEMERY ="center/getConfig";
+    public static final String CENTER_PERSISTENCE ="center/getPersistenceConfig";
 
     public enum Result{
         SUCCESS("10000"),FAIL("10001");
@@ -34,6 +35,18 @@ public class Constants {
 
         public String getCode() {
             return code;
+        }
+    }
+
+    public static enum ConfigurationRegisterType{
+        CENTER("center"),LOCAL("local");
+        private String type;
+        private ConfigurationRegisterType(String type){
+            this.type = type;
+        }
+
+        public String getType() {
+            return type;
         }
     }
 }

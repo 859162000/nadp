@@ -8,6 +8,14 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:spring/applicationContext.xml</param-value>
   </context-param>
+  <filter>
+    <filter-name>staticFile</filter-name>
+    <filter-class>cn.com.netease.nadp.monitor.common.StaticFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>staticFile</filter-name>
+    <url-pattern>*.html</url-pattern>
+  </filter-mapping>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>

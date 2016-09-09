@@ -7,14 +7,15 @@ import cn.com.netease.nadp.zookeeper.ZkManager;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * Created by bjbianlanzhou on 2016/8/22.
  */
 public class ConfigurationDataHandler implements ConfigurationHandler {
 
-    public void handle(Map<String, String> configurations) {
-        for(Map.Entry<String, String> entry : configurations.entrySet()){
+    public void handle(Properties configurations) {
+        for(Map.Entry entry : configurations.entrySet()){
             System.out.println("keys : " + entry.getKey() + " , " + "value : " + entry.getValue());
         }
     }

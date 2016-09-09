@@ -29,11 +29,16 @@ public class ConfigurationRegisterParser extends AbstractSimpleBeanDefinitionPar
     protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {
         String host = element.getAttribute("address");
         String port = element.getAttribute("appKey");
+        String type = element.getAttribute("type");
+        String location = element.getAttribute("location");
         if(host==null||port==null){
             new RuntimeException("registry address or port is null !").printStackTrace();
             System.exit(1);
         }
         builder.addPropertyValue("address", host);
         builder.addPropertyValue("appKey", port);
+        builder.addPropertyValue("type", type);
+        builder.addPropertyValue("location", location);
+        builder.setInitMethodName("process");
     }
 }

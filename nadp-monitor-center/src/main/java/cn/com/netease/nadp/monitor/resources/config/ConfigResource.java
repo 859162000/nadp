@@ -44,7 +44,7 @@ public class ConfigResource {
         try {
             PaginationModel paginationModel = new PaginationModel();
             paginationModel.setAaData(service.getData(null,map.get("name"),null,Constant.STATUS_USEFUL,map.get("iDisplayStart")==null?0:Integer.valueOf(map.get("iDisplayStart")),Constant.PAGINATION_MAX_COUNT));
-            paginationModel.setiTotalDisplayRecords(service.getDataCount(null,null,Constant.STATUS_USEFUL));
+            paginationModel.setiTotalDisplayRecords(service.getDataCount(map.get("name"),null,Constant.STATUS_USEFUL));
             paginationModel.setiTotalRecords(Constant.PAGINATION_MAX_COUNT);
             paginationModel.setsEcho(map.get("sEcho"));
             Map<String,Object> data = new HashMap<String, Object>();
