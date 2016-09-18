@@ -42,7 +42,7 @@ public final class Configuration {
      * @return
      */
     public Object getConfiguration(String key){
-        return StringUtils.obj2String(MEMERY.get(key));
+        return MEMERY.get(key);
     }
 
     /**
