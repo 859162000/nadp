@@ -41,7 +41,7 @@ public final class Configuration {
      * @param key
      * @return
      */
-    public String getConfiguration(String key){
+    public Object getConfiguration(String key){
         return StringUtils.obj2String(MEMERY.get(key));
     }
 
