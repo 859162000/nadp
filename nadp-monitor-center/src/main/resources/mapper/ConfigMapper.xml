@@ -28,8 +28,14 @@
         <if test="name != null and name != ''">
             and key_name=#{name}
         </if>
+        <if test="env != null and env != ''">
+            and id in (select config_id from config_env_rel where env_id = #{env})
+        </if>
+        <if test="app != null and app != ''">
+            and id in (select config_id from config_app_rel where app_id = #{app})
+        </if>
         <if test="pageFrom >= 0 and PageCapacity > 0" >
-          limit #{pageFrom} , #{PageCapacity}
+            limit #{pageFrom} , #{PageCapacity}
         </if>
     </select>
     <select id="selectDataCount" resultType="int" >
@@ -42,6 +48,12 @@
         </if>
         <if test="name != null and name != ''">
             and key_name=#{name}
+        </if>
+        <if test="env != null and env != ''">
+            and id in (select config_id from config_env_rel where env_id = #{env})
+        </if>
+        <if test="app != null and app != ''">
+            and id in (select config_id from config_app_rel where app_id = #{app})
         </if>
     </select>
     <delete id="deleteById" >

@@ -25,7 +25,7 @@ public interface ConfigService {
      * @param PageCapacity
      * @return
      */
-    public List<ConfigurationVO> getData(String id,String name,String type, String status, int pageFrom, int PageCapacity);
+    public List<ConfigurationVO> getData(String id,String name,String type, String status,String env,String app, int pageFrom, int PageCapacity);
 
     /**
      * 获取配置条数
@@ -34,7 +34,7 @@ public interface ConfigService {
      * @param status
      * @return
      */
-    public int getDataCount(String name,String type, String status);
+    public int getDataCount(String name,String type, String status,String env,String app);
 
     /**
      * 通过ID删除配置

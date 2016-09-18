@@ -43,8 +43,8 @@ public class ConfigResource {
         ResultModel model = new ResultModel();
         try {
             PaginationModel paginationModel = new PaginationModel();
-            paginationModel.setAaData(service.getData(null,map.get("name"),null,Constant.STATUS_USEFUL,map.get("iDisplayStart")==null?0:Integer.valueOf(map.get("iDisplayStart")),Constant.PAGINATION_MAX_COUNT));
-            paginationModel.setiTotalDisplayRecords(service.getDataCount(map.get("name"),null,Constant.STATUS_USEFUL));
+            paginationModel.setAaData(service.getData(null,map.get("name"),null,Constant.STATUS_USEFUL,map.get("env"),map.get("app"),map.get("iDisplayStart")==null?0:Integer.valueOf(map.get("iDisplayStart")),Constant.PAGINATION_MAX_COUNT));
+            paginationModel.setiTotalDisplayRecords(service.getDataCount(map.get("name"),null,Constant.STATUS_USEFUL,map.get("env"),map.get("app")));
             paginationModel.setiTotalRecords(Constant.PAGINATION_MAX_COUNT);
             paginationModel.setsEcho(map.get("sEcho"));
             Map<String,Object> data = new HashMap<String, Object>();
@@ -97,7 +97,7 @@ public class ConfigResource {
         Map<String,Object> infoMap = new HashMap<String, Object>();
         try {
             model.setDefault(Constant.ResultCode.SUCCESS);
-            List<ConfigurationVO> list = service.getData(id,null,null,null,0,0);
+            List<ConfigurationVO> list = service.getData(id,null,null,null,null,null,0,0);
             if(list!=null&&list.size()>0){
                 infoMap.put("vo",list.get(0));
             }else{

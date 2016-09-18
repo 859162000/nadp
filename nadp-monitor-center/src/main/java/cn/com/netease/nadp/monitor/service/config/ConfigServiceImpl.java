@@ -46,12 +46,12 @@ public class ConfigServiceImpl implements ConfigService {
         }
     }
 
-    public List<ConfigurationVO> getData(String id,String name,String type, String status, int pageFrom, int pageCapacity) {
-        return configDao.select(id,name,type,status,pageFrom,pageCapacity);
+    public List<ConfigurationVO> getData(String id,String name,String type, String status,String env,String app, int pageFrom, int pageCapacity) {
+        return configDao.select(id,name,type,status,env,app,pageFrom,pageCapacity);
     }
 
-    public int getDataCount(String name,String type, String status){
-        return configDao.selectDataCount(name,type,status);
+    public int getDataCount(String name,String type, String status,String env,String app){
+        return configDao.selectDataCount(name,type,status,env,app);
     }
 
     public int deleteById(String id){
