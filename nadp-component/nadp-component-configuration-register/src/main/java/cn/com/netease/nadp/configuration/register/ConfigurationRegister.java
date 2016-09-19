@@ -223,7 +223,7 @@ public class ConfigurationRegister implements ApplicationContextAware{
                 new RegistException(obj.get("message")==null?"":obj.get("message")+"").printStackTrace();
                 System.exit(1);
             }
-            if(obj.get("info")!=null){
+            if(obj.get("info")!=null&&!"".equals(obj.get("info"))){
                 JsonObject info = obj.getAsJsonObject("info");
                 if(info.get("zkAddress")!=null&&!"".equals(info.get("zkAddress"))){
                     this.zkAddress = info.get("zkAddress").getAsString();

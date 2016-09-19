@@ -93,6 +93,8 @@ final class ZkSource implements IZkSource{
      */
     public void cacheNode(String path,NodeCacheListener listener) throws Exception {
         NodeCache nodeCache = null;
+        //session expired listener
+        curator.getConnectionStateListenable().addListener(new ConnectionListener(path));
         if(curator.checkExists().forPath(path)==null){
             curator.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path);
             curator.setData().forPath(path, UUID.randomUUID().toString().getBytes("utf-8"));

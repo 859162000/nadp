@@ -32,6 +32,16 @@
             <div class="x_content">
                 名称：
                 <input class="date-picker" type="text" id="name">
+                环境:
+                <select id="envSel" style="font-size:16px" >
+
+                </select>
+
+
+                APP:
+                <select id="appSel" style="font-size:16px" >
+
+                </select>
                 <input class="btn btn-primary" type="button" id="query" value="查询">
                 <input class="btn btn-primary" type="button" data-target=".bs-example-modal-lg" data-toggle="modal" value="新增" id="addbtn">
             </div>
@@ -268,6 +278,42 @@
         })
     }
     $(function(){
+        $.ajax(
+                {
+                    type: "POST",
+                    url: "/api/env/listAll" ,
+                    data:JSON.stringify({"status":"1"}),
+                    dataType:"json",
+                    success: function(data){
+                        if(data.code == "10000"){
+                            $("#envSel").html("");
+                            $("#envSel").append('<option value="">全部</option>');
+                            $.each(data.info.aaData,function(index,env){
+                                $("#envSel").append('<option value="'+env.id+'">'+env.name+'</option>')
+                            })
+                        }
+                    }
+                }
+        );
+        $.ajax(
+                {
+                    type: "POST",
+                    url: "/api/application/listAll" ,
+                    data:JSON.stringify({"status":"1"}),
+                    dataType:"json",
+                    success: function(data){
+                        if(data.code == "10000"){
+                            $("#appSel").html("");
+                            $("#appSel").append('<option value="">全部</option>');
+                            $.each(data.info.aaData,function(index,app){
+                                $("#appSel").append('<option value="'+app.id+'">'+app.name+'</option>')
+                            })
+                        }
+                    }
+                }
+        )
+    })
+    $(function(){
         $(document).off("click","#addbtn");
         $(document).off("click","#addCommit");
         $(document).off("click","#confirmDelete");
@@ -448,6 +494,8 @@
             }
         });
        ajaxParamData.name = $('#name').val();
+       ajaxParamData.env = $('#envSel').val();
+       ajaxParamData.app = $('#appSel').val();
        $.post(sSource,JSON.stringify(ajaxParamData),function(result){
                                             fnCallback(result.info);
                                 }, "json");
