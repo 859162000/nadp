@@ -175,7 +175,7 @@
                 </div>
                 <div class="modal-body">
                     <h4>确认作废?</h4>
-                    <p>作废数据将被失效,为物理删除.</p>
+                    <p>作废数据将被失效.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">否</button>
@@ -358,6 +358,9 @@
                         data:JSON.stringify(data),
                         dataType:"json",
                         success: function(data){
+                            if(data.code == 10001){
+                                alert(data.info);
+                            }
                             $('#example').dataTable().fnClearTable();
                         }
                     }

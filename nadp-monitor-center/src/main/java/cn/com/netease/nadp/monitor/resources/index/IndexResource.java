@@ -20,6 +20,7 @@ import java.util.Map;
 @Path("/index")
 public class IndexResource {
     @GET
+    @Path("*")
     public Response  getConfig(Map<String,String> map,@Context HttpServletResponse response) {
         return Response.seeOther(UriBuilder.fromResource(IndexResource.class).path("/index.html").build()).build();
     }

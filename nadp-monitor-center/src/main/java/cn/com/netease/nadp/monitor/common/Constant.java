@@ -10,7 +10,6 @@ public class Constant {
 
     public static final String PATH_ROOT = "/configuration";
 
-    public static final String PATH_DATA = "/data";
 
     public static final String STATUS_USEFUL = "1";
 

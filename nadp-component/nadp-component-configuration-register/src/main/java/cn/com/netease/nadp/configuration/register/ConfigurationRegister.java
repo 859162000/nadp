@@ -2,6 +2,7 @@ package cn.com.netease.nadp.configuration.register;
 
 import cn.com.netease.nadp.common.Constants;
 import cn.com.netease.nadp.common.net.HttpUtils;
+import cn.com.netease.nadp.common.utils.ServerUtils;
 import cn.com.netease.nadp.common.utils.StringUtils;
 import cn.com.netease.nadp.zookeeper.ConfigurationNodeHandler;
 import cn.com.netease.nadp.zookeeper.ZkManager;
@@ -10,17 +11,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.event.ContextRefreshedEvent;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +30,9 @@ import java.util.Properties;
  * Description
  */
 public class ConfigurationRegister implements ApplicationContextAware{
+
+    private Log logger = LogFactory.getLog(this.getClass());
+
     /**
      * 注册中心地址
      */
@@ -112,7 +110,6 @@ public class ConfigurationRegister implements ApplicationContextAware{
     }
     public void process(){
         processPersistence();
-        processMemeryConfiguration();
     }
     /**
      * 处理持久化配置
@@ -159,6 +156,7 @@ public class ConfigurationRegister implements ApplicationContextAware{
             //log here
             throw new RuntimeException("center refused !");
         }
+
         JsonArray persistenceArr = obj.getAsJsonArray("info");
         List<Map<String,String>> persistenceList = (new Gson()).fromJson(persistenceArr, new TypeToken<List<Map<String,String>>>(){}.getType());
         if(persistenceList == null || persistenceList.size()<=0){
@@ -214,9 +212,7 @@ public class ConfigurationRegister implements ApplicationContextAware{
         map.put("appKey",this.appKey);
         String jsonStr = new Gson().toJson(map);
         try {
-            System.out.println(this.address+"/"+Constants.URL_CENTER+"&"+jsonStr);
             String message = HttpUtils.doPost(this.address+"/"+Constants.URL_CENTER,jsonStr);
-            System.out.println("message : " + message);
             JsonObject obj = new JsonParser().parse(message).getAsJsonObject();
             String code = obj.get("code")==null?Constants.Result.FAIL.getCode():obj.get("code").getAsString();
             if(code.equals(Constants.Result.FAIL.getCode())){
@@ -245,7 +241,7 @@ public class ConfigurationRegister implements ApplicationContextAware{
     private void regist(){
         String appPath = "/"+ Constants.CONFIGURATION + "/"+ appKey;
         String envPath = appPath + "/" + env ;
-        String path =envPath + "/" + Constants.DATA;
+        String path =envPath + "/" + ServerUtils.getServerPidAndName();
         try {
             ZkManager.getInstance().connect(this.zkAddress).cacheNode(path, new ConfigurationListener(appKey,applicationContext),new ConfigurationNodeHandler(appPath,this.appName.getBytes("utf-8"),envPath,this.envName.getBytes("utf-8")));
         }catch (Exception ex){
@@ -253,6 +249,7 @@ public class ConfigurationRegister implements ApplicationContextAware{
             System.exit(0);
         }
     }
+
 
 
 }

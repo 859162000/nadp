@@ -30,6 +30,10 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.com.netease</groupId>
             <artifactId>nadp-component-common</artifactId>
             <version>${project.parent.version}</version>

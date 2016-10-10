@@ -1,5 +1,6 @@
 package cn.com.netease.nadp.zookeeper;
 
+import cn.com.netease.nadp.common.utils.ServerUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.framework.state.ConnectionStateListener;

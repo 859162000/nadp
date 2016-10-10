@@ -3,6 +3,8 @@ package cn.com.netease.nadp.zookeeper;
 import cn.com.netease.nadp.zookeeper.exception.ZkReConnectedException;
 import org.apache.curator.framework.recipes.cache.NodeCacheListener;
 
+import java.util.List;
+
 /**
  * zookeeper manager
  * Created by bjbianlanzhou on 2016/7/29.
@@ -107,6 +109,10 @@ public class ZkManager {
 
     public void setData(String path,byte[] bytes) throws Exception {
         zkSource.setData(path,bytes);
+    }
+
+    public List<String> getChildren(String path) throws Exception {
+        return zkSource.getChildren(path);
     }
 
 

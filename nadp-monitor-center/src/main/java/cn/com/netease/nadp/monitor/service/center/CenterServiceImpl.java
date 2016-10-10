@@ -3,6 +3,7 @@ package cn.com.netease.nadp.monitor.service.center;
 import cn.com.netease.nadp.common.Constants;
 import cn.com.netease.nadp.monitor.common.Constant;
 import cn.com.netease.nadp.monitor.dao.*;
+import cn.com.netease.nadp.monitor.utils.NetUtils;
 import cn.com.netease.nadp.monitor.utils.SpringUtils;
 import cn.com.netease.nadp.monitor.utils.StringUtils;
 import cn.com.netease.nadp.monitor.vo.*;
@@ -91,7 +92,21 @@ public class CenterServiceImpl implements CenterService {
         }
         List<HostVO> hostList = hostDao.select(ip,Constants.Status.TRUE.getCode(),0,0);
         if(hostList == null || hostList.size()<=0){
-            return null;
+            boolean flag = false;
+            hostList = hostDao.select(null,Constants.Status.TRUE.getCode(),0,0);
+            for(HostVO vo:hostList){
+                if(vo.getHost().indexOf("/")<0){
+                    continue;
+                }else{
+                    if(NetUtils.ipIsInRange(ip,vo.getHost())){
+                        flag = true;
+                        break;
+                    }
+                }
+            }
+            if(!flag){
+                return null;
+            }
         }
         String hostId = hostList.get(0).getId()+"";
         String appId = appList.get(0).getId()+"";
@@ -105,18 +120,22 @@ public class CenterServiceImpl implements CenterService {
     }
 
     public void notify(String appId, String envId,String appKey) {
+        String data ;
+        String [] dataArr ;
+        String temp ;
         Properties properties = (Properties)SpringUtils.getBean("app");
         String zkAddress = StringUtils.nullObj2String(properties.get("zk_address"));
-        String path = Constant.PATH_ROOT + "/" + appKey + "/" + envId + Constant.PATH_DATA  ;
+        String path = Constant.PATH_ROOT + "/" + appKey + "/" + envId ;
         try {
             if(!ZkManager.getInstance().checkConnected()){
-                ZkManager.getInstance().connect(zkAddress).setData(path, UUID.randomUUID().toString().getBytes("utf-8"));
-            }else{
-                ZkManager.getInstance().setData(path, UUID.randomUUID().toString().getBytes("utf-8"));
+                ZkManager.getInstance().connect(zkAddress);
+            }
+            List<String> nodes = ZkManager.getInstance().connect(zkAddress).getChildren(path);
+            for(String node:nodes){
+                ZkManager.getInstance().connect(zkAddress).setData(path+"/"+node, (UUID.randomUUID().toString()).getBytes("utf-8"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("");
     }
 }

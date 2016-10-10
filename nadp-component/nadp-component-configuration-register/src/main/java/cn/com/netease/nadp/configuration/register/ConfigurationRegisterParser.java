@@ -5,12 +5,17 @@ import org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * XML转换BEAN的PARSE类
  * Created by bjbianlanzhou on 2016/8/2.
  * Description
  */
 public class ConfigurationRegisterParser extends AbstractSimpleBeanDefinitionParser {
+
+    private Log logger = LogFactory.getLog(this.getClass());
 
     private ConfigurationRegister register;
 
@@ -40,5 +45,6 @@ public class ConfigurationRegisterParser extends AbstractSimpleBeanDefinitionPar
         builder.addPropertyValue("type", type);
         builder.addPropertyValue("location", location);
         builder.setInitMethodName("process");
+        logger.info("configuration center type is " + type);
     }
 }

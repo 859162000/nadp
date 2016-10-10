@@ -27,7 +27,6 @@ public class HttpUtils {
         HttpClient httpclient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(url);
         HttpResponse response = httpclient.execute(httpGet);
-        System.out.println(response.getStatusLine());
         HttpEntity entity = response.getEntity();
         message = EntityUtils.toString(entity, "utf-8");
         return message;
@@ -60,17 +59,4 @@ public class HttpUtils {
         message = EntityUtils.toString(entity, "utf-8");
         return message;
     }
-
-    public static void main(String[] args) {
-        try {
-            //<nadp:register id="register" address="http://123.56.14.172:8080/api" appKey="bb617ba9-75b4-4982-8357-0395db6f49cc" />
-            List<NameValuePair> nvps = new ArrayList<NameValuePair>();
-            nvps.add(new BasicNameValuePair("appKey","bb617ba9-75b4-4982-8357-0395db6f49cc"));
-            String message = HttpUtils.doPost("http://127.0.0.1:9090/api/configuration/registCenter",nvps);
-            System.out.println(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }

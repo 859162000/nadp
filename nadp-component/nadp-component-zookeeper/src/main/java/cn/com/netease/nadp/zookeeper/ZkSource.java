@@ -1,5 +1,6 @@
 package cn.com.netease.nadp.zookeeper;
 
+import cn.com.netease.nadp.common.utils.ServerUtils;
 import cn.com.netease.nadp.zookeeper.api.IZkSource;
 import org.apache.curator.RetrySleeper;
 import org.apache.curator.framework.CuratorFramework;
@@ -96,8 +97,7 @@ final class ZkSource implements IZkSource{
         //session expired listener
         curator.getConnectionStateListenable().addListener(new ConnectionListener(path));
         if(curator.checkExists().forPath(path)==null){
-            curator.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path);
-            curator.setData().forPath(path, UUID.randomUUID().toString().getBytes("utf-8"));
+            curator.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path,UUID.randomUUID().toString().getBytes("utf-8"));
         }
         nodeCache = new NodeCache(curator,path);
         nodeCache.start();
@@ -125,6 +125,10 @@ final class ZkSource implements IZkSource{
 
     public boolean checkNodeExists(String path) throws Exception {
         return curator.checkExists().forPath(path)!=null;
+    }
+
+    public List<String> getChildren(String path) throws Exception {
+        return curator.getChildren().forPath(path);
     }
     /**
      * zookeeper连接信息
