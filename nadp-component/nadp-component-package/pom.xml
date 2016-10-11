@@ -7,9 +7,11 @@
         <groupId>cn.com.netease</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
     <artifactId>nadp-component-package</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>cn.com.netease</groupId>
@@ -28,6 +30,7 @@
         </dependency>
     </dependencies>
     <build>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -85,6 +88,78 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <finalName>nadp-component-config-center-${project.version}</finalName>
+            </build>
+        </profile>
+        <profile>
+            <id>snapshot</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <finalName>nadp-component-config-center-${project.version}</finalName>
+                <plugins>
+                    <plugin>
+                        <!-- explicitly define maven-deploy-plugin after other to force exec order -->
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>deploy</id>
+                                <phase>deploy</phase>
+                                <goals><goal>deploy</goal></goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>hz_repo</id>
+                    <name>hz_repo-snapshots</name>
+                    <url>http://mvn.hz.netease.com/artifactory/libs-snapshots</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+        <profile>
+            <id>final</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <finalName>nadp-component-config-center-${project.version}</finalName>
+                <plugins>
+                    <plugin>
+                        <!-- explicitly define maven-deploy-plugin after other to force exec order -->
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>deploy</id>
+                                <phase>deploy</phase>
+                                <goals><goal>deploy</goal></goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <distributionManagement>
+                <repository>
+                    <id>hz_repo</id>
+                    <name>hz_repo-releases</name>
+                    <url>http://mvn.hz.netease.com/artifactory/libs-releases</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+
+    </profiles>
 </project>
